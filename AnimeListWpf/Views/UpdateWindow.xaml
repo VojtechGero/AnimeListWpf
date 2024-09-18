@@ -1,0 +1,21 @@
+﻿<Window x:Class="AnimeListWpf.Views.UpdateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AnimeListWpf.Views"
+        mc:Ignorable="d"
+        Title="UpdateWindow" Height="250" Width="400"
+        Closing="Window_Closing"
+        Loaded="Window_Loaded"
+        ResizeMode="NoResize" Background="#FF252735">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Parsing" Name="ContentNameLabel" Foreground="White"
+                   VerticalAlignment="Center" FontSize="20" Margin="20 40"/>
+        <ProgressBar Grid.Row="1" Margin="20 40" Name="progressBar"/>
+    </Grid>
+</Window>

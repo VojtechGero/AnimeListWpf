@@ -1,0 +1,21 @@
+﻿<Application x:Class="AnimeListWpf.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AnimeListWpf"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+
+        
+        <ResourceDictionary >
+            
+            <ResourceDictionary.MergedDictionaries>
+
+                <!-- This line change Views/Styles to your path to Scrollbar.xaml -->
+                <ResourceDictionary Source="Views/Styles/Scrollbar.xaml" />
+                <ResourceDictionary Source="Views/Styles/Menu.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        
+    </Application.Resources>
+    
+</Application>
