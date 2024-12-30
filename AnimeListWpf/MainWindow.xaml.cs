@@ -165,21 +165,12 @@ public partial class MainWindow : Window
     public void RefreshContent()
     {
         var selectedIds = ContentList.SelectedItems.OfType<AContent>().Select(x => x.Id);
-        var selected = Sorted
+        var selected = RawContent
             .Select((item, index) => new { item, index })
             .Where(x => selectedIds.Contains(x.item.Id))
             .Select(x => x.index)
             .ToList();
         List<AContent> list = new List<AContent>();
-        if (Sorted.Any())
-        {
-            List<int> temp = new List<int>(selected);
-            selected.Clear();
-            foreach (var i in temp)
-            {
-                selected.Add(getIndexOf(Sorted[i].Id, RawContent));
-            }
-        }
         foreach (int i in selected)
         {
             list.Add(RawContent[i]);
