@@ -124,7 +124,7 @@ public partial class MainWindow : Window
         int current = ContentList.SelectedIndex;
         if (Sorted.Any())
         {
-            index = getIndex(Sorted[current].Id, RawContent);
+            index = getIndexOf(Sorted[current].Id, RawContent);
         }
         else index = current;
         (RawContent[index].Name, RawContent[index].OtherName) = (RawContent[index].OtherName, RawContent[index].Name);
@@ -135,7 +135,7 @@ public partial class MainWindow : Window
 
     public void WatchItem()
     {
-        int index = getIndex(Sorted[ContentList.SelectedIndex].Id, RawContent);
+        int index = getIndexOf(Sorted[ContentList.SelectedIndex].Id, RawContent);
         RawContent[index].InProgress = !RawContent[index].InProgress;
         _fileHandler.UpdateLine(index, RawContent[index]);
         sortWrite();
@@ -165,7 +165,7 @@ public partial class MainWindow : Window
     public void RefreshContent()
     {
         var selectedIds = ContentList.SelectedItems.OfType<AContent>().Select(x => x.Id);
-        var selected = RawContent
+        var selected = Sorted
             .Select((item, index) => new { item, index })
             .Where(x => selectedIds.Contains(x.item.Id))
             .Select(x => x.index)
@@ -177,7 +177,7 @@ public partial class MainWindow : Window
             selected.Clear();
             foreach (var i in temp)
             {
-                selected.Add(getIndex(Sorted[i].Id, RawContent));
+                selected.Add(getIndexOf(Sorted[i].Id, RawContent));
             }
         }
         foreach (int i in selected)
@@ -221,11 +221,11 @@ public partial class MainWindow : Window
         }
     }
 
-    private int getIndex(long id, List<AContent> Content)
+    private int getIndexOf(long id, List<AContent> List)
     {
-        for (int i = 0; i < Content.Count; i++)
+        for (int i = 0; i < List.Count; i++)
         {
-            if (Content[i].Id == id) return i;
+            if (List[i].Id == id) return i;
         }
         return -1;
     }
