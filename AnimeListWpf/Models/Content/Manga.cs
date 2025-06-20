@@ -48,7 +48,7 @@ public class Manga : AContent
         }
         output.Add(new DescriptionSegment("Manga", NotOut ? "Currently Publishing" : "Finished Publishing"));
         if (Score is not null) output.Add(new DescriptionSegment("Score", $"{Score:F2}"));
-        if (Started is not null) output.Add(new DescriptionSegment("Started Started publishing", Started.ToString()));
+        if (Started is not null) output.Add(new DescriptionSegment("Started Publishing", Started.ToString()));
         if (Count > 0) output.Add(new DescriptionSegment("Chapters", Count.ToString()));
         if (Authors is not null)
         {

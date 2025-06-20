@@ -69,14 +69,18 @@ public partial class SearchAndDescription : UserControl
     public void DisplayContent(AContent content)
     {
         this.content = content;
-        ShowDescription();
+        UpdateDescription();
     }
 
-    private void ShowDescription()
+    private void UpdateDescription()
     {
         if (content is null) return;
         NameLabel.Text = content.Name;
-        Description.Text = content.Description();
+        DescriptionWrapPanel.Children.Clear();
+        foreach (var item in content.Description())
+        {
+            DescriptionWrapPanel.Children.Add(new DescriptionUiSegment(item));
+        }
         if (content.OtherName is not null)
         {
             SwapButton.Visibility = Visibility.Visible;
@@ -94,7 +98,7 @@ public partial class SearchAndDescription : UserControl
         Visibility visibility;
         if (show) visibility = Visibility.Visible;
         else visibility = Visibility.Hidden;
-        Description.Visibility = visibility;
+        //Description.Visibility = visibility;
         NameLabel.Visibility = visibility;
         MalLogo.Visibility = visibility;
     }

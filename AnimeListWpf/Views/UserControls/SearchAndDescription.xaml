@@ -63,8 +63,7 @@
         <!--Description-->
         <ScrollViewer Grid.Row="1" Margin="10 0" 
               CanContentScroll="True"
-              VerticalScrollBarVisibility="Auto"
-              HorizontalScrollBarVisibility="Auto">
+              VerticalScrollBarVisibility="Auto">
             <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -89,9 +88,8 @@
                         ToolTip="Click to Copy" Cursor="Hand" MouseLeftButtonDown="NameLabel_MouseLeftButtonDown" Foreground="White"
                                />
                 </Grid>
-                <TextBlock Grid.Row="1" Text="Description" Margin="10" 
-               VerticalAlignment="Top" HorizontalAlignment="Left"
-               Name="Description" FontSize="20" Foreground="White"/>
+                <WrapPanel Grid.Row="1" Margin="10" Name="DescriptionWrapPanel"
+                           VerticalAlignment="Top" HorizontalAlignment="Left"/>
             </Grid>
         </ScrollViewer>
         
