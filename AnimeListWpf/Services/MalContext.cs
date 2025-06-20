@@ -1,10 +1,10 @@
-﻿using AnimeListWpf.Models;
+﻿using AnimeListWpf.Models.Content;
 using AnimeListWpf.Services;
 using JikanDotNet;
 using JikanDotNet.Config;
 using JikanDotNet.Exceptions;
-using Anime = AnimeListWpf.Models.Anime;
-using Manga = AnimeListWpf.Models.Manga;
+using Anime = AnimeListWpf.Models.Content.Anime;
+using Manga = AnimeListWpf.Models.Content.Manga;
 
 namespace ContentList.Services;
 

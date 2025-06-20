@@ -1,4 +1,4 @@
-﻿using AnimeListWpf.Models;
+﻿using AnimeListWpf.Models.Content;
 using AnimeListWpf.Services;
 using System.Diagnostics;
 using System.Windows;
@@ -118,14 +118,12 @@ public partial class SearchAndDescription : UserControl
         var mousePosition = Mouse.GetPosition(this);
         var screenPosition = PointToScreen(mousePosition);
 
-        // Convert screen position to logical pixels
         var dpi = VisualTreeHelper.GetDpi(this);
         var logicalScreenPosition = new Point(
             screenPosition.X / dpi.DpiScaleX,
             screenPosition.Y / dpi.DpiScaleY
         );
 
-        // Create a Popup
         Popup popup = new Popup
         {
             Placement = PlacementMode.AbsolutePoint,
@@ -140,18 +138,16 @@ public partial class SearchAndDescription : UserControl
             }
         };
 
-        // Open the popup
         popup.IsOpen = true;
 
-        // Set a timer to close the popup after 1 second
         var timer = new System.Windows.Threading.DispatcherTimer
         {
             Interval = TimeSpan.FromSeconds(1)
         };
         timer.Tick += (sender, args) =>
         {
-            popup.IsOpen = false; // Close the popup
-            timer.Stop();         // Stop the timer
+            popup.IsOpen = false;
+            timer.Stop();
         };
         timer.Start();
     }

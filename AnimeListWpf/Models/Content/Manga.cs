@@ -1,4 +1,4 @@
-﻿namespace AnimeListWpf.Models;
+﻿namespace AnimeListWpf.Models.Content;
 
 public class Manga : AContent
 {
@@ -37,42 +37,27 @@ public class Manga : AContent
         this.Score = score;
     }
 
-    public override string Description()
+    public override List<DescriptionSegment> Description()
     {
-        string output = "";
-        const string tab = "    ";
+
+        List<DescriptionSegment> output = new List<DescriptionSegment>();
+
         if (OtherName is not null)
         {
-            output += $"({OtherName})\n";
+            output.Add(new DescriptionSegment("Alternative name", OtherName));
         }
-        output += "Manga" + tab;
-        if (NotOut) output += "Currently Publishing\n";
-        else output += "Finished Publishing\n";
-        if (Score is not null) output += $"Score: {Score:F2}\n";
-        if (Started is not null)
-        {
-            output += $"Started publishing: {Started}\n";
-        }
-        if (Count > 0) output += $"Chapters: {Count}\n";
+        output.Add(new DescriptionSegment("Manga", NotOut ? "Currently Publishing" : "Finished Publishing"));
+        if (Score is not null) output.Add(new DescriptionSegment("Score", $"{Score:F2}"));
+        if (Started is not null) output.Add(new DescriptionSegment("Started Started publishing", Started.ToString()));
+        if (Count > 0) output.Add(new DescriptionSegment("Chapters", Count.ToString()));
         if (Authors is not null)
         {
-            int c = Authors.Count;
-            if (c > 0)
-            {
-                output += "Author:\n";
-                foreach (string author in Authors)
-                {
-                    output += $"{tab}{author}\n";
-                }
-            }
+            var count = Authors.Count;
+            if (count > 0) output.Add(new DescriptionSegment(count > 1 ? "Author" : "Authors", Authors));
         }
         if (Genres is not null)
         {
-            if (Genres.Count > 0) output += "Genres:\n";
-            foreach (string g in Genres)
-            {
-                output += $"{tab}{g}\n";
-            }
+            if (Genres.Count > 0) output.Add(new DescriptionSegment("Genres", Genres));
         }
         return output;
     }

@@ -1,4 +1,4 @@
-﻿namespace AnimeListWpf.Models;
+﻿namespace AnimeListWpf.Models.Content;
 
 public class Anime : AContent
 {
@@ -28,31 +28,24 @@ public class Anime : AContent
     }
 
 
-    public override string Description()
+    public override List<DescriptionSegment> Description()
     {
-        string output = "";
-        const string tab = "    ";
+        List<DescriptionSegment> output = new List<DescriptionSegment>();
+
         if (OtherName is not null)
         {
-            output += $"({OtherName})\n";
+            output.Add(new DescriptionSegment("Alternative name", OtherName));
         }
-        output += "Anime" + tab;
-        if (NotOut) output += "Currently Airing\n";
-        else output += "Finished Airing\n";
-        if (Score is not null) output += $"Score: {Score:F2}\n";
+        output.Add(new DescriptionSegment("Anime", NotOut ? "Currently Airing" : "Finished Airing"));
+        if (Score is not null) output.Add(new DescriptionSegment("Score", $"{Score:F2}"));
         if (Started is not null)
         {
-            if (Count == 1) output += $"Aired: {Started}\n";
-            else output += $"Started airing: {Started}\n";
+            output.Add(new DescriptionSegment(Count == 1 ? "Aired" : "Started airing", Started.ToString()));
         }
-        if (Count > 0) output += $"Episodes: {Count}\n";
+        if (Count > 0) output.Add(new DescriptionSegment("Episodes", Count.ToString()));
         if (Genres is not null)
         {
-            if (Genres.Count > 0) output += "Genres:\n";
-            foreach (string g in Genres)
-            {
-                output += $"{tab}{g}\n";
-            }
+            if (Genres.Count > 0) output.Add(new DescriptionSegment("Genres", Genres));
         }
         return output;
     }

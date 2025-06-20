@@ -1,4 +1,4 @@
-﻿using AnimeListWpf.Models;
+﻿using AnimeListWpf.Models.Content;
 using System.Windows;
 
 namespace AnimeListWpf.Views;

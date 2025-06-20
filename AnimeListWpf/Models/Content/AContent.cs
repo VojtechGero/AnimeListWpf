@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace AnimeListWpf.Models;
+namespace AnimeListWpf.Models.Content;
 
 public abstract class AContent
 {
@@ -22,7 +22,7 @@ public abstract class AContent
         return JsonSerializer.Serialize(this);
     }
 
-    public abstract string Description();
+    public abstract List<DescriptionSegment> Description();
 
     public override string ToString()
     {
