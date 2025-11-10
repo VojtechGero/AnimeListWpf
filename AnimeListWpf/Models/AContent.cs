@@ -15,7 +15,9 @@ public abstract class AContent
     public int? Started { get; set; }
     public bool InProgress { get; set; }
     public float? Score { get; set; }
-
+    public string Synopsis { get; set; }
+    public string ImageUrl { get; set; }
+    public string Type { get; set; }
 
     public string ToJson()
     {

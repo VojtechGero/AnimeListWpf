@@ -11,9 +11,11 @@ public partial class UpdateWindow : Window
 {
     public List<AContent> content;
     bool stopParsing;
+    int progress;
     public UpdateWindow(List<AContent> content)
     {
         InitializeComponent();
+        progress = 0;
         stopParsing = false;
         this.content = content;
         setupProgressBar();
@@ -45,7 +47,7 @@ public partial class UpdateWindow : Window
 
     private async Task<AContent> update(AContent toUpdate, MalContext malContext)
     {
-        ContentNameLabel.Text = $"Updating {toUpdate.Name}";
+        ContentNameLabel.Text = $"Updating {progress}/{content.Count} {toUpdate.Name}";
         AContent newContent;
         if (toUpdate.IsAnime)
         {
@@ -77,6 +79,7 @@ public partial class UpdateWindow : Window
         for (int i = 0; i < content.Count; i++)
         {
             if (stopParsing) break;
+            progress++;
             content[i] = await update(content[i], mal);
         }
         await FinishProgressBar();

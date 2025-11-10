@@ -5,8 +5,7 @@ public class Manga : AContent
 
     public Manga() { }
 
-    public Manga(long id, List<string> names, int? count, bool notOut,
-                   List<string> genres, List<string> authors, int? year, float? score)
+    public Manga(long id, List<string> names, int? count, bool notOut, List<string> genres, List<string> authors, int? year, float? score, string synopsis, string imageUrl, string type)
     {
         IsAnime = false;
         Id = id;
@@ -34,7 +33,10 @@ public class Manga : AContent
         }
         else OtherName = null;
         InProgress = false;
-        this.Score = score;
+        Score = score;
+        Synopsis = synopsis;
+        ImageUrl = imageUrl;
+        Type = type;
     }
 
     public override string Description()

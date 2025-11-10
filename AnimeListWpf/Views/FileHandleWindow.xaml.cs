@@ -13,6 +13,7 @@ public partial class FileHandleWindow : Window
     List<string> names;
     MainWindow _mainWindow;
     bool stopParsing;
+    int progress;
     public FileHandleWindow(string path)
     {
         InitializeComponent();
@@ -20,6 +21,7 @@ public partial class FileHandleWindow : Window
         ParsedFileName.Text = "Parsing: " + StringOps.getFileName(path);
         names = FileHandler.GetLines(path);
         stopParsing = false;
+        progress = 0;
         setupProgressBar();
     }
 
@@ -58,7 +60,7 @@ public partial class FileHandleWindow : Window
     {
         List<AContent> content = new List<AContent>();
         string query = name.Trim();
-        ContentNameLabel.Text = "Processing: " + query;
+        ContentNameLabel.Text = $"Processing {progress}/{names.Count}: " + query;
         content.Clear();
         content.AddRange(await mal.searchAnime(query));
         content.AddRange(await mal.searchManga(query));
@@ -76,6 +78,7 @@ public partial class FileHandleWindow : Window
         foreach (string name in names)
         {
             if (stopParsing) break;
+            progress++;
             await parseLine(name, mal);
         }
         await FinishProgressBar();

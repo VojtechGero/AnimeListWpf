@@ -89,7 +89,10 @@ public class MalContext
                 notOut: input.Airing,
                 genres: genres,
                 year: year,
-                score: (float?)input.Score);
+                score: (float?)input.Score,
+                synopsis: input.Synopsis,
+                imageUrl: input.Images.JPG.ImageUrl,
+                type: input.Type);
         return anime;
     }
 
@@ -109,7 +112,11 @@ public class MalContext
                 genres: genres,
                 authors: getAuthors(input.Authors),
                 year: year,
-                score: (float?)input.Score);
+                score: (float?)input.Score,
+                synopsis: input.Synopsis,
+                imageUrl: input.Images.JPG.ImageUrl,
+                type: input.Type
+                );
         return manga;
     }
 

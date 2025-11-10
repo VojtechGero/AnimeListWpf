@@ -5,8 +5,7 @@ public class Anime : AContent
 
     public Anime() { }
 
-    public Anime(long id, List<string> names, int? episodes, bool notOut,
-                   List<string> genres, int? year, float? score)
+    public Anime(long id, List<string> names, int? episodes, bool notOut, List<string> genres, int? year, float? score, string synopsis, string imageUrl, string type)
     {
         IsAnime = true;
         Id = id;
@@ -24,7 +23,10 @@ public class Anime : AContent
         }
         else OtherName = null;
         InProgress = false;
-        this.Score = score;
+        Score = score;
+        Synopsis = synopsis;
+        ImageUrl = imageUrl;
+        Type = type;
     }
 
 
