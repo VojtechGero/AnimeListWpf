@@ -41,17 +41,19 @@
 
         </Style>
     </UserControl.Resources>
-    
-    <Grid Background="#FF252735">
+
+    <Grid Background="#FF252735"  Height="100">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
-            <ColumnDefinition Width="70*"/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="40*"/>
         </Grid.ColumnDefinitions>
         <Button Grid.Column="0" FontSize="20" Content="Add" Margin="20 0"
                 Padding="40 10" Click="Button_Click" Name="AddButton" Background="#FF20262A" Foreground="White"
                    HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <TextBlock Grid.Column="1" FontSize="20" Text="Name" 
-                   Margin="20 0 0 0" Name="Name" Foreground="White"
+                   Margin="20 0 0 0" Name="ContentName" Foreground="White"
                    HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Image Name="ContentImage" Grid.Column="2" Stretch="Uniform" HorizontalAlignment="Right"/>
     </Grid>
 </UserControl>

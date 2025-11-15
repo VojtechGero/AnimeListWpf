@@ -46,6 +46,7 @@ public partial class AddWindow : Window
         TimerStop();
         Parsing = true;
         IdError = false;
+        LoadingLabel.Visibility = Visibility.Visible;
         if (string.IsNullOrWhiteSpace(SearchBars.IdField.Text) && !string.IsNullOrWhiteSpace(SearchBars.SearchBox.Text))
         {
             await parseSearch();
@@ -55,9 +56,9 @@ public partial class AddWindow : Window
             await parseId();
         }
         else contentList.Clear();
-        updateForm();
+        //updateForm();
         Parsing = false;
-        updateForm();
+        await updateForm();
 
     }
     private async Task parseSearch()
@@ -110,7 +111,7 @@ public partial class AddWindow : Window
         else IdError = true;
 
     }
-    private void reDrawButtons()
+    private async Task reDrawButtons()
     {
         foreach (var item in addContents)
         {
@@ -118,8 +119,12 @@ public partial class AddWindow : Window
         }
         for (int i = 0; i < contentList.Count; i++)
         {
+            addContents[i].ContentName.Text = contentList[i].Name;
+            await addContents[i].LoadImage(contentList[i].ImageUrl);
+        }
+        for (int i = 0; i < contentList.Count; i++)
+        {
             addContents[i].Visibility = Visibility.Visible;
-            addContents[i].Name.Text = contentList[i].Name;
         }
 
     }
@@ -133,10 +138,11 @@ public partial class AddWindow : Window
         _timer.Stop();
     }
 
-    private void updateForm()
+    private async Task updateForm()
     {
         errorCheck();
-        reDrawButtons();
+        await reDrawButtons();
+        LoadingLabel.Visibility = Visibility.Hidden;
     }
     private void errorCheck()
     {

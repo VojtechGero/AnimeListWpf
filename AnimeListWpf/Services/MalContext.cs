@@ -91,7 +91,7 @@ public class MalContext
                 year: year,
                 score: (float?)input.Score,
                 synopsis: input.Synopsis,
-                imageUrl: input.Images.JPG.ImageUrl,
+                imageUrl: input.Images.JPG.LargeImageUrl,
                 type: input.Type);
         return anime;
     }
@@ -114,7 +114,7 @@ public class MalContext
                 year: year,
                 score: (float?)input.Score,
                 synopsis: input.Synopsis,
-                imageUrl: input.Images.JPG.ImageUrl,
+                imageUrl: input.Images.JPG.LargeImageUrl,
                 type: input.Type
                 );
         return manga;

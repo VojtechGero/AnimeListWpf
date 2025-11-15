@@ -1,6 +1,5 @@
-﻿using System.Configuration;
-using System.Data;
-using System.Windows;
+﻿using System.Windows;
+using System.Windows.Threading;
 
 namespace AnimeListWpf
 {
@@ -9,6 +8,18 @@ namespace AnimeListWpf
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            Application.Current.DispatcherUnhandledException +=
+                AppDispatcherUnhandledException;
+
+            base.OnStartup(e);
+        }
+        void AppDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            MessageBox.Show($"Exception: {e.Exception}", $"Exception raised in {e.Exception.Source}");
+            e.Handled = true;
+        }
     }
 
 }

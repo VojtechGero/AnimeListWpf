@@ -27,6 +27,12 @@
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                 </Grid.RowDefinitions>
+                <Label Name="LoadingLabel" Grid.Row="0"
+                       Content="Loading..." Visibility="Hidden"
+                       FontSize="25"
+                       Foreground="White"
+                       HorizontalContentAlignment="Center"
+                       VerticalContentAlignment="Center"/>
                 <UserControls:AddContent Grid.Row="0" Padding="5" x:Name="AddContent0"/>
                 <UserControls:AddContent Grid.Row="1" Padding="5" x:Name="AddContent1"/>
                 <UserControls:AddContent Grid.Row="2" Padding="5" x:Name="AddContent2"/>
