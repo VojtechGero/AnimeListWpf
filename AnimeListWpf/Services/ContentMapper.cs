@@ -27,8 +27,9 @@ public static class ContentMapper
         mappedContent.Started = content.Started;
         mappedContent.InProgress = content.InProgress;
         mappedContent.Score = content.Score;
-
+        mappedContent.Synopsis = content.Synopsis;
+        mappedContent.ImageUrl = content.ImageUrl;
+        mappedContent.Type = content.Type;
         return mappedContent;
     }
-
 }

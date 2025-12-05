@@ -45,23 +45,23 @@ public partial class UpdateWindow : Window
         }
     }
 
-    private async Task<AContent> update(AContent toUpdate, MalContext malContext)
+    private async Task<AContent> update(AContent oldContent, MalContext malContext)
     {
-        ContentNameLabel.Text = $"Updating {progress}/{content.Count} {toUpdate.Name}";
+        ContentNameLabel.Text = $"Updating {progress}/{content.Count} {oldContent.Name}";
         AContent newContent;
-        if (toUpdate.IsAnime)
+        if (oldContent.IsAnime)
         {
-            newContent = await malContext.GetAnimeId(toUpdate.Id);
+            newContent = await malContext.GetAnimeId(oldContent.Id);
         }
         else
         {
-            newContent = await malContext.GetMangaId(toUpdate.Id);
+            newContent = await malContext.GetMangaId(oldContent.Id);
         }
-        if (newContent.OtherName == toUpdate.Name)
+        if (newContent.OtherName == oldContent.Name)
         {
             (newContent.Name, newContent.OtherName) = (newContent.OtherName, newContent.Name);
         }
-        newContent.InProgress = toUpdate.InProgress;
+        newContent.InProgress = oldContent.InProgress;
         stepProgressBar();
         return newContent;
     }

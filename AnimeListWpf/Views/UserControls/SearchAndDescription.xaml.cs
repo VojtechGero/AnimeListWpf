@@ -1,11 +1,6 @@
 ﻿using AnimeListWpf.Models;
-using AnimeListWpf.Services;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-using System.Windows.Media;
 
 namespace AnimeListWpf.Views.UserControls;
 
@@ -49,15 +44,6 @@ public partial class SearchAndDescription : UserControl
         _mainWindow.RemoveItems();
     }
 
-    private void MalLogo_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-    {
-        if (content is null) return;
-        Process.Start(new ProcessStartInfo
-        {
-            FileName = StringOps.GetLink(content),
-            UseShellExecute = true
-        });
-    }
     public void HideDescription()
     {
         WatchButton.Visibility = Visibility.Hidden;
@@ -71,12 +57,14 @@ public partial class SearchAndDescription : UserControl
         this.content = content;
         ShowDescription();
     }
-
+    public void SwapNames()
+    {
+        Description.SwapNames();
+    }
     private void ShowDescription()
     {
         if (content is null) return;
-        NameLabel.Text = content.Name;
-        Description.Text = content.Description();
+        Description.UpdateDescription(content);
         if (content.OtherName is not null)
         {
             SwapButton.Visibility = Visibility.Visible;
@@ -91,12 +79,7 @@ public partial class SearchAndDescription : UserControl
 
     private void showDescription(bool show)
     {
-        Visibility visibility;
-        if (show) visibility = Visibility.Visible;
-        else visibility = Visibility.Hidden;
-        Description.Visibility = visibility;
-        NameLabel.Visibility = visibility;
-        MalLogo.Visibility = visibility;
+        Description.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
     }
     private void ProgressButton()
     {
@@ -110,51 +93,7 @@ public partial class SearchAndDescription : UserControl
         WatchButton.Content = action;
     }
 
-    private void NameLabel_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
-    {
-        if (content is null) return;
-        Clipboard.SetText(content.Name);
 
-        var mousePosition = Mouse.GetPosition(this);
-        var screenPosition = PointToScreen(mousePosition);
-
-        // Convert screen position to logical pixels
-        var dpi = VisualTreeHelper.GetDpi(this);
-        var logicalScreenPosition = new Point(
-            screenPosition.X / dpi.DpiScaleX,
-            screenPosition.Y / dpi.DpiScaleY
-        );
-
-        // Create a Popup
-        Popup popup = new Popup
-        {
-            Placement = PlacementMode.AbsolutePoint,
-            PlacementTarget = this,
-            HorizontalOffset = logicalScreenPosition.X,
-            VerticalOffset = logicalScreenPosition.Y + SystemParameters.CursorHeight / 2,
-            Child = new TextBlock
-            {
-                Text = "Copied to Clipboard!",
-                Background = Brushes.LightYellow,
-                Padding = new Thickness(5)
-            }
-        };
-
-        // Open the popup
-        popup.IsOpen = true;
-
-        // Set a timer to close the popup after 1 second
-        var timer = new System.Windows.Threading.DispatcherTimer
-        {
-            Interval = TimeSpan.FromSeconds(1)
-        };
-        timer.Tick += (sender, args) =>
-        {
-            popup.IsOpen = false; // Close the popup
-            timer.Stop();         // Stop the timer
-        };
-        timer.Start();
-    }
 
     private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
     {

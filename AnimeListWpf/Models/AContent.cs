@@ -19,6 +19,7 @@ public abstract class AContent
     public string ImageUrl { get; set; }
     public string Type { get; set; }
 
+
     public string ToJson()
     {
         return JsonSerializer.Serialize(this);

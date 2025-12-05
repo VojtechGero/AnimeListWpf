@@ -10,14 +10,15 @@ namespace ContentList.Services;
 
 public class MalContext
 {
-    IJikan jikan;
+    IJikan _jikan;
+    int _maxRetries = 50;
     public MalContext()
     {
         JikanClientConfiguration config = new JikanClientConfiguration()
         {
             LimiterConfigurations = TaskLimiterConfiguration.None
         };
-        jikan = new Jikan(config);
+        _jikan = new Jikan(config);
     }
 
     private List<string> getTitles(ICollection<TitleEntry> entries)
@@ -130,16 +131,20 @@ public class MalContext
         return authors;
     }
 
-    public async Task<Anime> GetAnimeId(long id)
+    public async Task<Anime> GetAnimeId(long id, int retries = 0)
     {
+        if (retries == _maxRetries)
+        {
+            throw new JikanRequestException($"Max retries reached on anime {id}");
+        }
         try
         {
-            var res = await jikan.GetAnimeAsync(id);
+            var res = await _jikan.GetAnimeAsync(id);
             return toAnime(res.Data);
         }
         catch (JikanRequestException)
         {
-            return await GetAnimeId(id);
+            return await GetAnimeId(id, retries + 1);
         }
         catch (JikanValidationException)
         {
@@ -147,16 +152,20 @@ public class MalContext
         }
     }
 
-    public async Task<Manga> GetMangaId(long id)
+    public async Task<Manga> GetMangaId(long id, int retries = 0)
     {
+        if (retries == _maxRetries)
+        {
+            throw new JikanRequestException($"Max retries reached on manga {id}");
+        }
         try
         {
-            var res = await jikan.GetMangaAsync(id);
+            var res = await _jikan.GetMangaAsync(id);
             return toManga(res.Data);
         }
         catch (JikanRequestException)
         {
-            return await GetMangaId(id);
+            return await GetMangaId(id, retries + 1);
         }
         catch (JikanValidationException)
         {
@@ -168,7 +177,7 @@ public class MalContext
     {
         try
         {
-            var animes = await jikan.SearchAnimeAsync(query);
+            var animes = await _jikan.SearchAnimeAsync(query);
             if (animes is null)
             {
                 return null;
@@ -197,7 +206,7 @@ public class MalContext
     {
         try
         {
-            var mangas = await jikan.SearchMangaAsync(query);
+            var mangas = await _jikan.SearchMangaAsync(query);
             if (mangas is null)
             {
                 return null;

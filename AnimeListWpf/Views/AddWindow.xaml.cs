@@ -18,6 +18,7 @@ public partial class AddWindow : Window
     List<AContent> contentList = new();
     MalContext _malCtx;
     MainWindow _mainWindow;
+    ImageService _imageService;
 
     DispatcherTimer _timer;
     public AddWindow(bool IsAnime)
@@ -25,6 +26,7 @@ public partial class AddWindow : Window
         InitializeComponent();
         this.IsAnime = IsAnime;
         _mainWindow = (MainWindow)Application.Current.MainWindow;
+        _imageService = new ImageService();
         _malCtx = new MalContext();
         addContents = [
             AddContent0,
@@ -33,6 +35,10 @@ public partial class AddWindow : Window
             AddContent3,
             AddContent4
         ];
+        foreach (var addContentControl in addContents)
+        {
+            addContentControl.SetImageService(_imageService);
+        }
         IdError = Parsing = false;
         updateForm();
         _timer = new DispatcherTimer();

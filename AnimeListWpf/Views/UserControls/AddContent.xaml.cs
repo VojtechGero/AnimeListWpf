@@ -1,8 +1,6 @@
-﻿using System.IO;
-using System.Net.Http;
+﻿using AnimeListWpf.Services;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media.Imaging;
 
 namespace AnimeListWpf.Views.UserControls
 {
@@ -12,26 +10,21 @@ namespace AnimeListWpf.Views.UserControls
     public partial class AddContent : UserControl
     {
         AddWindow _addWindow;
-
+        ImageService _imageService;
 
         public AddContent()
         {
             InitializeComponent();
             _addWindow = Application.Current.Windows.OfType<AddWindow>().SingleOrDefault();
         }
-
+        public void SetImageService(ImageService imageService)
+        {
+            _imageService = imageService;
+        }
         public async Task LoadImage(string imageUrl)
         {
-            using var http = new HttpClient();
-            var bytes = await http.GetByteArrayAsync(imageUrl);
-            using var ms = new MemoryStream(bytes);
-            var bitmap = new BitmapImage();
-
-            bitmap.BeginInit();
-            bitmap.CacheOption = BitmapCacheOption.OnLoad; // Important: loads immediately
-            bitmap.StreamSource = ms;
-            bitmap.EndInit();
-            bitmap.Freeze(); // Important for UI threading
+            // Important for UI threading
+            var bitmap = await _imageService.DownloadImageToBitmap(imageUrl);
             ContentImage.Source = bitmap;
         }
 

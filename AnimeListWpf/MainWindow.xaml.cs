@@ -128,7 +128,7 @@ public partial class MainWindow : Window
         }
         else index = current;
         (RawContent[index].Name, RawContent[index].OtherName) = (RawContent[index].OtherName, RawContent[index].Name);
-        SearchAndDescription.DisplayContent(RawContent[index]);
+        SearchAndDescription.SwapNames();
         ContentList.Items.Refresh();
         _fileHandler.UpdateLine(index, RawContent[index]);
     }
